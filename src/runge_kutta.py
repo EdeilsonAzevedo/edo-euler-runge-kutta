@@ -47,20 +47,3 @@ def rk4(f, t0, y0, h, n):
     return t, np.squeeze(y)
 
 
-def rk2_heun(f, t0, y0, h, n):
-    """Runge-Kutta de 2ª ordem — método de Heun (erro global O(h^2)).
-
-    Preditor por Euler, corretor pela média das inclinações nos extremos.
-    """
-    y0 = np.atleast_1d(np.asarray(y0, dtype=float))
-    t = t0 + h * np.arange(n + 1)
-    y = np.empty((n + 1, y0.size), dtype=float)
-    y[0] = y0
-
-    for i in range(n):
-        ti, yi = t[i], y[i]
-        k1 = np.asarray(f(ti, yi), dtype=float)
-        k2 = np.asarray(f(ti + h, yi + h * k1), dtype=float)
-        y[i + 1] = yi + (h / 2) * (k1 + k2)
-
-    return t, np.squeeze(y)
